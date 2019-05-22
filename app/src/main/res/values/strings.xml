@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Instagram App</string>
     <string name="action_settings">Settings</string>
-    <string name="button">button</string>
+    <string name="button">Применить</string>
+    <string name="content_main_label_login">Логин</string>
+    <string name="content_main_label_password">Пароль</string>
 </resources>
