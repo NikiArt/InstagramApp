@@ -6,6 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.instagramapp.Adapters.GalleryAdapter
+import kotlinx.android.synthetic.main.fragment_dashboard.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,6 +32,7 @@ class DashboardFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private val imageGalleryAdapter = GalleryAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +46,26 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val inflatedView = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        inflatedView.fragment_dashboard_gallery_list.layoutManager = LinearLayoutManager(context)
+        inflatedView.fragment_dashboard_gallery_list.adapter = imageGalleryAdapter
+
+        imageGalleryAdapter.imageList.clear()
+        for (i in 1..9) {
+            val sdf = SimpleDateFormat("YYYY-MM-DD HH:mm")
+            val rand = Math.random()
+            val priority = ((rand * 10) % 2).toInt()
+            val image = Image(
+                if (priority == 0) 0 else 1,
+                "ïmage$i",
+                "${(rand * 1000).toInt()} Kb",
+                sdf.format(Date((rand * 100000000000).toLong()))
+            )
+
+
+            imageGalleryAdapter.imageList.add(image)
+        }
+        return inflatedView
     }
 
     // TODO: Rename method, update argument and hook method into UI event
