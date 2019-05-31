@@ -18,6 +18,7 @@ class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
     lateinit var buttonHome: ImageButton
     lateinit var buttonDashboard: ImageButton
     lateinit var buttonNotifications: ImageButton
+
     var lastFragment = 1
     lateinit var anim: Animation
     var fabIsOpen = false
@@ -67,6 +68,8 @@ class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
         buttonHome = findViewById(R.id.activity_main2_button_home)
         buttonDashboard = findViewById(R.id.activity_main2_button_dashboard)
         buttonNotifications = findViewById(R.id.activity_main2_button_notify)
+
+
 
         buttonHome.setOnClickListener {
             closeFabPanel()
