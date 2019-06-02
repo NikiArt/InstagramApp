@@ -6,27 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.instagramapp.Adapters.GalleryAdapter
+import androidx.recyclerview.widget.LinearSnapHelper
+import com.example.instagramapp.adapters.GalleryAdapter
+import com.example.instagramapp.uiservices.MySimpleCallback
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [DashboardFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [DashboardFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class DashboardFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -47,19 +38,27 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val inflatedView = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        inflatedView.fragment_dashboard_gallery_list.layoutManager = LinearLayoutManager(context)
-        inflatedView.fragment_dashboard_gallery_list.adapter = imageGalleryAdapter
+        val galleryList = inflatedView.fragment_dashboard_gallery_list
+        galleryList.layoutManager = LinearLayoutManager(context)
+        galleryList.adapter = imageGalleryAdapter
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(galleryList)
+
+        val itemTouchHelper = ItemTouchHelper(MySimpleCallback(imageGalleryAdapter))
+        itemTouchHelper.attachToRecyclerView(galleryList)
+
 
         imageGalleryAdapter.imageList.clear()
         for (i in 1..9) {
-            val sdf = SimpleDateFormat("YYYY-MM-DD HH:mm")
+            val sdf = SimpleDateFormat("YYYY-MM-dd HH:mm")
             val rand = Math.random()
             val priority = ((rand * 10) % 2).toInt()
             val image = Image(
                 if (priority == 0) 0 else 1,
-                "ïmage$i",
+                "Image$i",
                 "${(rand * 1000).toInt()} Kb",
-                sdf.format(Date((rand * 100000000000).toLong()))
+                sdf.format(Date((rand * 1000000000000).toLong()))
             )
 
 
@@ -68,7 +67,6 @@ class DashboardFragment : Fragment() {
         return inflatedView
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(fragment: Int) {
         listener?.onFragmentInteraction(fragment)
     }
@@ -87,32 +85,11 @@ class DashboardFragment : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(fragment: Int)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DashboardFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             DashboardFragment().apply {

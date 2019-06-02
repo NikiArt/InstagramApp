@@ -1,4 +1,4 @@
-package com.example.instagramapp.Adapters
+package com.example.instagramapp.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instagramapp.Image
 import com.example.instagramapp.R
+import com.example.instagramapp.uiservices.MySimpleAdapter
 import kotlinx.android.synthetic.main.item_photo_gallery.view.*
 import kotlinx.android.synthetic.main.item_photo_gallery_center_big.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class GalleryAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GalleryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MySimpleAdapter {
+
     var imageList = ArrayList<Image>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -61,6 +65,16 @@ class GalleryAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ViewHolderGalleryVenterBig(view: View) : RecyclerView.ViewHolder(view) {
         var photo: ImageView = view.item_photo_gallery_center_big_photo
+    }
+
+    override fun onItemDelete(position: Int) {
+        imageList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        Collections.swap(imageList, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 
 }
