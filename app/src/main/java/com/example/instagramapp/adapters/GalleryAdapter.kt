@@ -15,24 +15,21 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class GalleryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MySimpleAdapter {
-
     var imageList = ArrayList<Image>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            0 -> {
-                var view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo_gallery, parent, false)
-                ViewHolderGallery(view)
-            }
-            1 -> {
-                var view =
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_photo_gallery_center_big, parent, false)
-                ViewHolderGalleryVenterBig(view)
-            }
-            else -> {
-                var view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo_gallery, parent, false)
-                ViewHolderGallery(view)
-            }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
+        0 -> {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo_gallery, parent, false)
+            ViewHolderGallery(view)
+        }
+        1 -> {
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_photo_gallery_center_big, parent, false)
+            ViewHolderGalleryVenterBig(view)
+        }
+        else -> {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo_gallery, parent, false)
+            ViewHolderGallery(view)
         }
     }
 
@@ -50,6 +47,7 @@ class GalleryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MySimple
             }
             is ViewHolderGalleryVenterBig -> holder.photo.setImageResource(R.drawable.photo_girl)
         }
+        holder.itemView.tag = position
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -65,6 +63,7 @@ class GalleryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MySimple
 
     class ViewHolderGalleryVenterBig(view: View) : RecyclerView.ViewHolder(view) {
         var photo: ImageView = view.item_photo_gallery_center_big_photo
+
     }
 
     override fun onItemDelete(position: Int) {

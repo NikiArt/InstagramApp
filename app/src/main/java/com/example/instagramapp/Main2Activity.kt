@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_main2.*
 class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
     DashboardFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener {
     val homeFragment = HomeFragment()
-    val dashboardFragment = DashboardFragment()
+    val galleryFragment = DashboardFragment()
     val notificationsFragment = NotificationsFragment()
     lateinit var buttonHome: ImageButton
     lateinit var buttonDashboard: ImageButton
@@ -55,7 +55,7 @@ class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
     private fun getCurrentFragment(fragmentNumber: Int): Fragment {
         return when (fragmentNumber) {
             1 -> homeFragment
-            2 -> dashboardFragment
+            2 -> galleryFragment
             3 -> notificationsFragment
             else -> homeFragment
         }

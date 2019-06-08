@@ -1,32 +1,28 @@
 package com.example.instagramapp
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_notifications.view.*
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [NotificationsFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [NotificationsFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class NotificationsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    lateinit var blackView: View
+    lateinit var button: Button
+    var widthSquare = 0
+    var heightSquare = 0
+    var squareBig = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +36,57 @@ class NotificationsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notifications, container, false)
+        val inflaterView = inflater.inflate(R.layout.fragment_notifications, container, false)
+        blackView = inflaterView.fragment_notifications_black_square
+        button = inflaterView.fragment_notifications_button
+
+        button.setOnClickListener {
+            button.layoutParams.width = 1000
+            //startAnimation()
+        }
+        blackView.setOnClickListener {
+            startAnimation()
+        }
+        return inflaterView
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    fun startAnimation() {
+        /*if (widthSquare == 0) widthSquare = button.width
+        if (heightSquare == 0) heightSquare = button.height*/
+        val dp = resources.displayMetrics
+        var valueAnimatorWidth = ValueAnimator.ofInt(1, 200)
+        var valueAnimatorHeight = ValueAnimator.ofInt(1, 200)
+
+
+        button.layoutParams.height = 1000
+        button.layoutParams.width = 1000
+
+        /*if (squareBig) {
+            valueAnimatorWidth = ValueAnimator.ofInt(dp.widthPixels - 64, widthSquare)
+            valueAnimatorHeight = ValueAnimator.ofInt(dp.heightPixels - 128, heightSquare)
+            blackView.layoutParams.height = heightSquare
+            blackView.layoutParams.width = widthSquare
+        } else {
+            valueAnimatorWidth = ValueAnimator.ofInt(widthSquare, dp.widthPixels - 64)
+            valueAnimatorHeight = ValueAnimator.ofInt(heightSquare, dp.heightPixels - 128)
+            blackView.layoutParams.height = dp.widthPixels - 64
+            blackView.layoutParams.width = dp.heightPixels - 128
+        }
+        valueAnimatorHeight.addUpdateListener {
+            blackView.layoutParams.height = valueAnimatorHeight.animatedValue as Int
+        }
+        valueAnimatorWidth.addUpdateListener {
+            blackView.layoutParams.width = valueAnimatorWidth.animatedValue as Int
+        }
+
+        valueAnimatorHeight.start()
+        valueAnimatorWidth.start()*/
+        /*val animatorSet = AnimatorSet()
+        animatorSet.duration = 1500
+        animatorSet.playSequentially(valueAnimatorHeight, valueAnimatorWidth)
+        animatorSet.start()*/
+    }
+
     fun onButtonPressed(fragment: Int) {
         listener?.onFragmentInteraction(fragment)
     }
@@ -63,32 +105,11 @@ class NotificationsFragment : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(fragment: Int)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NotificationsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             NotificationsFragment().apply {
