@@ -1,12 +1,15 @@
 package com.example.instagramapp
 
+import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_notifications.view.*
 
@@ -17,8 +20,8 @@ class NotificationsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    lateinit var blackView: View
     lateinit var button: Button
+    lateinit var imageAnim: ImageView
     var widthSquare = 0
     var heightSquare = 0
     var squareBig = false
@@ -36,55 +39,47 @@ class NotificationsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val inflaterView = inflater.inflate(R.layout.fragment_notifications, container, false)
-        blackView = inflaterView.fragment_notifications_black_square
-        button = inflaterView.fragment_notifications_button
+        val inflatedView = inflater.inflate(R.layout.fragment_notifications, container, false)
+        button = inflatedView.fragment_notifications_button
+        imageAnim = inflatedView.fragment_notifications_image
+        (imageAnim.drawable as AnimatedVectorDrawable).start()
 
         button.setOnClickListener {
-            button.layoutParams.width = 1000
-            //startAnimation()
-        }
-        blackView.setOnClickListener {
             startAnimation()
         }
-        return inflaterView
+        return inflatedView
     }
 
     fun startAnimation() {
-        /*if (widthSquare == 0) widthSquare = button.width
-        if (heightSquare == 0) heightSquare = button.height*/
+        if (widthSquare == 0) widthSquare = button.width
+        if (heightSquare == 0) heightSquare = button.height
         val dp = resources.displayMetrics
-        var valueAnimatorWidth = ValueAnimator.ofInt(1, 200)
-        var valueAnimatorHeight = ValueAnimator.ofInt(1, 200)
+        var valueAnimatorWidth: ValueAnimator
+        var valueAnimatorHeight: ValueAnimator
 
 
-        button.layoutParams.height = 1000
-        button.layoutParams.width = 1000
-
-        /*if (squareBig) {
-            valueAnimatorWidth = ValueAnimator.ofInt(dp.widthPixels - 64, widthSquare)
-            valueAnimatorHeight = ValueAnimator.ofInt(dp.heightPixels - 128, heightSquare)
-            blackView.layoutParams.height = heightSquare
-            blackView.layoutParams.width = widthSquare
+        if (squareBig) {
+            valueAnimatorWidth = ValueAnimator.ofInt(dp.widthPixels - (dp.density * 64).toInt(), widthSquare)
+            valueAnimatorHeight = ValueAnimator.ofInt(dp.heightPixels - (dp.density * 256).toInt(), heightSquare)
+            squareBig = false
         } else {
-            valueAnimatorWidth = ValueAnimator.ofInt(widthSquare, dp.widthPixels - 64)
-            valueAnimatorHeight = ValueAnimator.ofInt(heightSquare, dp.heightPixels - 128)
-            blackView.layoutParams.height = dp.widthPixels - 64
-            blackView.layoutParams.width = dp.heightPixels - 128
+            valueAnimatorWidth = ValueAnimator.ofInt(widthSquare, dp.widthPixels - (dp.density * 64).toInt())
+            valueAnimatorHeight = ValueAnimator.ofInt(heightSquare, dp.heightPixels - (dp.density * 256).toInt())
+            squareBig = true
         }
         valueAnimatorHeight.addUpdateListener {
-            blackView.layoutParams.height = valueAnimatorHeight.animatedValue as Int
+            button.height = valueAnimatorHeight.animatedValue as Int
+            button.layoutParams.height = valueAnimatorHeight.animatedValue as Int
         }
         valueAnimatorWidth.addUpdateListener {
-            blackView.layoutParams.width = valueAnimatorWidth.animatedValue as Int
+            button.width = valueAnimatorWidth.animatedValue as Int
+            button.layoutParams.width = valueAnimatorWidth.animatedValue as Int
         }
 
-        valueAnimatorHeight.start()
-        valueAnimatorWidth.start()*/
-        /*val animatorSet = AnimatorSet()
-        animatorSet.duration = 1500
+        val animatorSet = AnimatorSet()
+        animatorSet.duration = 700
         animatorSet.playSequentially(valueAnimatorHeight, valueAnimatorWidth)
-        animatorSet.start()*/
+        animatorSet.start()
     }
 
     fun onButtonPressed(fragment: Int) {
