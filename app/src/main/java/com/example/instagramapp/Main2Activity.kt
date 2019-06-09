@@ -11,10 +11,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main2.*
 
 class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
-    DashboardFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener {
+    DashboardFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener,
+    ChangeSceneFragment.OnFragmentInteractionListener {
     val homeFragment = HomeFragment()
     val galleryFragment = DashboardFragment()
     val notificationsFragment = NotificationsFragment()
+    val changeSceneFragment = ChangeSceneFragment()
     lateinit var buttonHome: ImageButton
     lateinit var buttonDashboard: ImageButton
     lateinit var buttonNotifications: ImageButton
@@ -42,6 +44,10 @@ class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
                 changeFragment(3)
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_scenes -> {
+                changeFragment(4)
+                return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }
@@ -57,6 +63,7 @@ class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionLis
             1 -> homeFragment
             2 -> galleryFragment
             3 -> notificationsFragment
+            4 -> changeSceneFragment
             else -> homeFragment
         }
     }
