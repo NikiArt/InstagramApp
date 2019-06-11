@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
     private val fragmentList = ArrayList<Fragment>()
+    private val titleList = ArrayList<String>()
 
     override fun getItem(position: Int): Fragment {
         return fragmentList[position]
@@ -15,7 +16,12 @@ class MyPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapt
         return fragmentList.size
     }
 
-    fun addFragment(fragment: Fragment) {
+    fun addFragment(fragment: Fragment, title: String) {
         fragmentList.add(fragment)
+        titleList.add(title)
+    }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return titleList[position]
     }
 }
