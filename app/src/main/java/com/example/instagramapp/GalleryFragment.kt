@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.instagramapp.adapters.GalleryAdapter
 import com.example.instagramapp.uiservices.MySimpleCallback
-import kotlinx.android.synthetic.main.fragment_dashboard.view.*
+import kotlinx.android.synthetic.main.fragment_gallery.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,7 +37,7 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val inflatedView = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val inflatedView = inflater.inflate(R.layout.fragment_gallery, container, false)
         val galleryList = inflatedView.fragment_dashboard_gallery_list
         galleryList.layoutManager = LinearLayoutManager(context)
         galleryList.adapter = imageGalleryAdapter
@@ -64,6 +64,7 @@ class DashboardFragment : Fragment() {
 
             imageGalleryAdapter.imageList.add(image)
         }
+
         return inflatedView
     }
 
