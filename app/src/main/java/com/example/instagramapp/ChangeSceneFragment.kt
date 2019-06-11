@@ -13,6 +13,7 @@ import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import androidx.transition.TransitionSet
 import kotlinx.android.synthetic.main.fragment_change_scenes.view.*
+import kotlinx.android.synthetic.main.scene1.view.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -22,12 +23,12 @@ class ChangeSceneFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     lateinit var button: Button
-    lateinit var firstSceneButton: Button
-    lateinit var secondSceneButton: Button
+    lateinit var but: Button
     lateinit var secondScene: Scene
     lateinit var firstScene: Scene
     lateinit var root: ViewGroup
     var isFirstScene = true
+    lateinit var inflatedView: View
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,21 +43,21 @@ class ChangeSceneFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val inflatedView = inflater.inflate(R.layout.fragment_change_scenes, container, false)
+        inflatedView = inflater.inflate(R.layout.fragment_change_scenes, container, false)
         root = inflatedView.fragment_change_scenes_root
         secondScene = Scene.getSceneForLayout(root, R.layout.scene2, context as Context)
-        firstScene = Scene.getSceneForLayout(root, R.layout.scene2, context as Context)
-/*        secondSceneButton = inflatedView.scene2_button
-        firstSceneButton = inflatedView.scene1_button*/
+        firstScene = Scene.getSceneForLayout(root, R.layout.scene1, context as Context)
         button = inflatedView.fragment_change_scenes_button
+
+        but = inflatedView.scene_button
+
+        but.setOnClickListener {
+            changeScene()
+        }
 
         button.setOnClickListener {
             changeScene()
         }
-
-        /*firstSceneButton.setOnClickListener {
-            changeScene()
-        }*/
 
         return inflatedView
     }
@@ -67,9 +68,15 @@ class ChangeSceneFragment : Fragment() {
         set.ordering = TransitionSet.ORDERING_SEQUENTIAL
         set.duration = 2000
         set.interpolator = OvershootInterpolator(1.5f)
-        TransitionManager.go(secondScene, set)
-        //TransitionManager.go(if (isFirst) secondScene else firstScene, set)
 
+        TransitionManager.go(if (isFirstScene) secondScene else firstScene, set)
+        isFirstScene = !this.isFirstScene
+
+        but = inflatedView.scene_button
+
+        but.setOnClickListener {
+            changeScene()
+        }
 
     }
 
