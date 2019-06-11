@@ -11,10 +11,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main2.*
 
 class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
-    DashboardFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener,
+    GalleryFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener,
     ChangeSceneFragment.OnFragmentInteractionListener {
     val homeFragment = HomeFragment()
-    val galleryFragment = DashboardFragment()
+    val galleryFragment = PagerFragment()
     val notificationsFragment = NotificationsFragment()
     val changeSceneFragment = ChangeSceneFragment()
     lateinit var buttonHome: ImageButton
