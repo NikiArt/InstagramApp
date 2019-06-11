@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import com.ToxicBakery.viewpager.transforms.DrawerTransformer
 import com.example.instagramapp.adapters.MyPagerAdapter
 import kotlinx.android.synthetic.main.fragment_view_pager.view.*
 
@@ -23,6 +24,7 @@ class PagerFragment : Fragment() {
         pagerAdapter.addFragment(GalleryFragment())
         pagerAdapter.addFragment(GalleryFragment())
         viewPager.adapter = pagerAdapter
+        viewPager.setPageTransformer(true, DrawerTransformer())
         return inflatedView
     }
 }
