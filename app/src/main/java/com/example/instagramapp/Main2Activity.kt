@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main2.*
 
-class Main2Activity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
+class Main2Activity : AppCompatActivity(),
     GalleryFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener,
     ChangeSceneFragment.OnFragmentInteractionListener {
     val homeFragment = HomeFragment()

@@ -1,101 +1,66 @@
 package com.example.instagramapp
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
+import androidx.transition.TransitionManager
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [HomeFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
+    val homeSet = ConstraintSet()
+    val homeDetailSet = ConstraintSet()
+    lateinit var constraintLayout: ConstraintLayout
+    lateinit var homeAlfaA: ImageView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+        val inflatedView = inflater.inflate(R.layout.fragment_home, container, false)
+        val imageHome = inflatedView.fragment_home_image
+        constraintLayout = inflatedView.fragment_home_root
+        homeAlfaA = inflatedView.fragment_home_image_alfa_a
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(fragment: Int) {
-        listener?.onFragmentInteraction(fragment)
-    }
+        homeSet.clone(constraintLayout)
+        homeDetailSet.clone(context, R.layout.fragment_home_details)
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
+        val animA = AnimationUtils.loadAnimation(context, R.anim.home_animation)
+        animA.startOffset = 1000
+        homeAlfaA.startAnimation(animA)
 
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
+        imageHome.setOnClickListener {
+            /* val set = TransitionSet()
+             val changeBounds = ChangeBounds()
+             changeBounds.pathMotion = ArcMotion()
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(fragment: Int)
-    }
+             set.addTransition(Fade())
+             set.addTransition(changeBounds)
+             set.addTransition(Slide(Gravity.RIGHT))
+             set.ordering = TransitionSet.ORDERING_TOGETHER
+             set.duration = 500
+             set.interpolator = AccelerateInterpolator()*/
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+            TransitionManager.beginDelayedTransition(constraintLayout)
+
+            if (inflatedView.fragment_home_image_alfa_a.visibility == View.GONE) {
+                homeSet.applyTo(constraintLayout)
+                homeAlfaA.startAnimation(animA)
+            } else {
+                homeDetailSet.applyTo(constraintLayout)
+                homeAlfaA.clearAnimation()
             }
+
+
+        }
+
+        return inflatedView
     }
 }

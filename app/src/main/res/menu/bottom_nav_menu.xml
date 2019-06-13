@@ -18,6 +18,7 @@
     <item
             android:id="@+id/navigation_scenes"
             android:icon="@android:drawable/ic_menu_crop"
+            android:iconTint="#000"
             android:title="@string/scenes"/>
 
 </menu>
